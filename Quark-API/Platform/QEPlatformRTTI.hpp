@@ -19,17 +19,43 @@
 #define __QUARK_ENGINE_PLATFORM_RTTI_HPP__
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// [MODULE::HEADER]
+/// [HEADER]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <type_traits>
 #include <typeinfo>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// [MODULE::DEFINITION]
+/// [DEFINITION]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace QE
 {
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /// \brief Allow scoped enumeration to be used with bit operation(s).
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+#   define TRAIT_ENUM_ALLOW_BIT_OPERATION(type)                                                \
+        constexpr type operator&(type l, type r)                                               \
+        {                                                                                      \
+            const auto lType = std::underlying_type_t<type>(l);                                \
+            const auto rType = std::underlying_type_t<type>(r);                                \
+            return static_cast<type>(lType & rType);                                           \
+        }                                                                                      \
+        constexpr type operator|(type l, type r)                                               \
+        {                                                                                      \
+            const auto lType = std::underlying_type_t<type>(l);                                \
+            const auto rType = std::underlying_type_t<type>(r);                                \
+            return static_cast<type>(lType | rType);                                           \
+        }                                                                                      \
+        constexpr type operator~(type l)                                                       \
+        {                                                                                      \
+            const auto lType = std::underlying_type_t<type>(l);                                \
+            return static_cast<type>(~lType);                                                  \
+        }                                                                                      \
+        constexpr type operator^(type l, type r)                                               \
+        {                                                                                      \
+            const auto lType = std::underlying_type_t<type>(l);                                \
+            const auto rType = std::underlying_type_t<type>(r);                                \
+            return static_cast<type>(lType ^ rType);                                           \
+        }
 }
 
 #endif // __QUARK_ENGINE_PLATFORM_RTTI_HPP__
