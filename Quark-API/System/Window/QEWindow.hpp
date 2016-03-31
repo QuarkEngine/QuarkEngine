@@ -34,19 +34,13 @@ namespace QE
     class Window
     {
     public:
-        //!
-        //! \brief Get the width of the window (in screen coordinates)
-        //!
-        //! \return The width of the window (in screen coordinates)
-        //!
-        virtual UInt16 GetWidth() const = 0;
-
-        //!
-        //! \brief Get the height of the window (in screen coordinates)
-        //!
-        //! \return The height of the window (in screen coordinates)
-        //!
-        virtual UInt16 GetHeight() const = 0;
+	    //!
+	    //! \brief Get the dimension of the window (in screen coordinates)
+	    //!
+	    //! \param[in] width    -   The value to store the width in
+	    //! \param[in] height   -   The value to store the height in
+	    //!
+	    virtual Void GetDimension(UInt32& width, UInt32& height) const = 0;
 
         //!
         //! \brief Check whenever the window is visible

@@ -15,17 +15,17 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#ifndef __QUARK_ENGINE_MEDIA_WINDOW_HPP__
-#define __QUARK_ENGINE_MEDIA_WINDOW_HPP__
+#ifndef __QUARK_ENGINE_SYSTEM_WINDOWIMPL_HPP__
+#define __QUARK_ENGINE_SYSTEM_WINDOWIMPL_HPP__
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// [MODULE::HEADER]
+/// [HEADER]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "System/Window/QEWindow.hpp"
 #include <GLFW/glfw3.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// [MODULE::DEFINITION]
+/// [DEFINITION]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace QE
 {
@@ -46,18 +46,12 @@ namespace QE
 		~WindowImpl();
 	public:
 		//!
-		//! \brief Get the width of the window (in screen coordinates)
+		//! \brief Get the dimension of the window (in screen coordinates)
 		//!
-		//! \return The width of the window (in screen coordinates)
+		//! \param[in] width    -   The value to store the width in
+		//! \param[in] height   -   The value to store the height in
 		//!
-		UInt16 GetWidth() const override;
-
-		//!
-		//! \brief Get the height of the window (in screen coordinates)
-		//!
-		//! \return The height of the window (in screen coordinates)
-		//!
-		UInt16 GetHeight() const override;
+		Void GetDimension(UInt32& width, UInt32& height) const override;
 
 		//!
 		//! \brief Check whenever the window is visible
@@ -141,4 +135,4 @@ namespace QE
 	};
 }
 
-#endif // __QUARK_ENGINE_MEDIA_WINDOW_HPP__
+#endif // __QUARK_ENGINE_SYSTEM_WINDOWIMPL_HPP__

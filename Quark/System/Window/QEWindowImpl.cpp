@@ -16,13 +16,19 @@
 /// limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// [HEADER]
+////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "QEWindowImpl.hpp"
-using namespace QE;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// [DECLARATION]
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //!
 //! \brief Constructs an instance of WindowImpl
 //!
-WindowImpl::WindowImpl() :
+QE::WindowImpl::WindowImpl() :
 	mWindow(nullptr)
 {
 }
@@ -30,36 +36,21 @@ WindowImpl::WindowImpl() :
 //!
 //! \brief Destructs the instance of WindowImpl
 //!
-WindowImpl::~WindowImpl()
+QE::WindowImpl::~WindowImpl()
 {
 	// Destroy the window
 	glfwDestroyWindow(mWindow);
 }
 
 //!
-//! \brief Get the width of the window (in screen coordinates)
+//! \brief Get the dimension of the window (in screen coordinates)
 //!
-//! \return The width of the window (in screen coordinates)
+//! \param[in] width    -   The value to store the width in
+//! \param[in] height   -   The value to store the height in
 //!
-UInt16 WindowImpl::GetWidth() const
+QE::Void QE::WindowImpl::GetDimension(UInt32& width, UInt32& height) const
 {
-	Int32 width;
-	glfwGetWindowSize(mWindow, &width, nullptr);
-
-	return width;
-}
-
-//!
-//! \brief Get the height of the window (in screen coordinates)
-//!
-//! \return The height of the window (in screen coordinates)
-//!
-UInt16 WindowImpl::GetHeight() const
-{
-	Int32 height;
-	glfwGetWindowSize(mWindow, nullptr, &height);
-
-	return height;
+	glfwGetWindowSize(mWindow, reinterpret_cast<int*>(&width), reinterpret_cast<int*>(&height));
 }
 
 //!
@@ -67,7 +58,7 @@ UInt16 WindowImpl::GetHeight() const
 //!
 //! \return True if the window is visible, false otherwise
 //!
-Bool WindowImpl::IsVisible() const
+QE::Bool QE::WindowImpl::IsVisible() const
 {
 	return glfwGetWindowAttrib(mWindow, GLFW_VISIBLE);
 }
@@ -77,7 +68,7 @@ Bool WindowImpl::IsVisible() const
 //!
 //! \return True if the window is resizable, false otherwise
 //!
-Bool WindowImpl::IsResizable() const
+QE::Bool QE::WindowImpl::IsResizable() const
 {
 	return glfwGetWindowAttrib(mWindow, GLFW_RESIZABLE);
 }
@@ -87,7 +78,7 @@ Bool WindowImpl::IsResizable() const
 //!
 //! \return True if the window is decorated, false otherwise
 //!
-Bool WindowImpl::IsDecorated() const
+QE::Bool QE::WindowImpl::IsDecorated() const
 {
 	return glfwGetWindowAttrib(mWindow, GLFW_DECORATED);
 }
@@ -97,7 +88,7 @@ Bool WindowImpl::IsDecorated() const
 //!
 //! \return True if the window is in windowed mode, false otherwise
 //!
-Bool WindowImpl::IsWindowed() const
+QE::Bool QE::WindowImpl::IsWindowed() const
 {
 	return glfwGetWindowMonitor(mWindow) == nullptr;
 }
@@ -107,7 +98,7 @@ Bool WindowImpl::IsWindowed() const
 //!
 //! \return True if the window is in fullscreen mode, false otherwise
 //!
-Bool WindowImpl::IsFullscreen() const
+QE::Bool QE::WindowImpl::IsFullscreen() const
 {
 	return glfwGetWindowMonitor(mWindow) != nullptr;
 }
@@ -118,7 +109,7 @@ Bool WindowImpl::IsFullscreen() const
 //! \param[in] width    -   The new width (in screen coordinates)
 //! \param[in] height   -   The new height (in screen coordinates)
 //!
-Void WindowImpl::SetDimension(UInt16 width, UInt16 height)
+QE::Void QE::WindowImpl::SetDimension(UInt16 width, UInt16 height)
 {
 	glfwSetWindowSize(mWindow, width, height);
 }
@@ -128,7 +119,7 @@ Void WindowImpl::SetDimension(UInt16 width, UInt16 height)
 //!
 //! \param[in] title    -   The new title of the window
 //!
-Void WindowImpl::SetTitle(const String& title)
+QE::Void QE::WindowImpl::SetTitle(const String& title)
 {
 	glfwSetWindowTitle(mWindow, title.c_str());
 }
@@ -138,7 +129,7 @@ Void WindowImpl::SetTitle(const String& title)
 //!
 //! \param[in] visible   -   True to show the window, false otherwise
 //!
-Void WindowImpl::SetVisibility(Bool visible)
+QE::Void QE::WindowImpl::SetVisibility(Bool visible)
 {
 	if (visible)
 	{
@@ -157,7 +148,7 @@ Void WindowImpl::SetVisibility(Bool visible)
 //! \param[in] height   -   The new height (in screen coordinates)
 //! \param[in] mode     -   The decoration mode of the window
 //!
-Void WindowImpl::SwitchToWindowed(UInt16 width, UInt16 height)
+QE::Void QE::WindowImpl::SwitchToWindowed(UInt16 width, UInt16 height)
 {
 	// Only switch to fullscreen is applicable
 	if (IsFullscreen())
@@ -170,7 +161,7 @@ Void WindowImpl::SwitchToWindowed(UInt16 width, UInt16 height)
 //!
 //! \brief Change the current mode of the window to fullscreen mode
 //!
-Void WindowImpl::SwitchToFullscreen()
+QE::Void QE::WindowImpl::SwitchToFullscreen()
 {
 	// Only switch to fullscreen is applicable
 	if (!IsFullscreen())
@@ -190,7 +181,7 @@ Void WindowImpl::SwitchToFullscreen()
 //! \param[in] width    -   The new width (in screen coordinates)
 //! \param[in] height   -   The new height (in screen coordinates)
 //!
-Void WindowImpl::SwitchToFullscreen(UInt16 width, UInt16 height)
+QE::Void QE::WindowImpl::SwitchToFullscreen(UInt16 width, UInt16 height)
 {
 	// Only switch to fullscreen is applicable
 	if (!IsFullscreen())
