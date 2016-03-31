@@ -32,30 +32,34 @@ namespace QE
     ////////////////////////////////////////////////////////////////////////////////////////////////
     /// \brief Allow scoped enumeration to be used with bit operation(s).
     ////////////////////////////////////////////////////////////////////////////////////////////////
-#   define TRAIT_ENUM_ALLOW_BIT_OPERATION(type)                                                \
-        constexpr type operator&(type l, type r)                                               \
+#   define QE_TRAIT_ENUM_BIT_OPERATIONS(type)                                                  \
+        constexpr auto operator&(type l, type r)                                               \
         {                                                                                      \
             const auto lType = std::underlying_type_t<type>(l);                                \
             const auto rType = std::underlying_type_t<type>(r);                                \
             return static_cast<type>(lType & rType);                                           \
         }                                                                                      \
-        constexpr type operator|(type l, type r)                                               \
+        constexpr auto operator|(type l, type r)                                               \
         {                                                                                      \
             const auto lType = std::underlying_type_t<type>(l);                                \
             const auto rType = std::underlying_type_t<type>(r);                                \
             return static_cast<type>(lType | rType);                                           \
         }                                                                                      \
-        constexpr type operator~(type l)                                                       \
+        constexpr auto operator~(type l)                                                       \
         {                                                                                      \
             const auto lType = std::underlying_type_t<type>(l);                                \
             return static_cast<type>(~lType);                                                  \
         }                                                                                      \
-        constexpr type operator^(type l, type r)                                               \
+        constexpr auto operator^(type l, type r)                                               \
         {                                                                                      \
             const auto lType = std::underlying_type_t<type>(l);                                \
             const auto rType = std::underlying_type_t<type>(r);                                \
             return static_cast<type>(lType ^ rType);                                           \
-        }
+        }                                                                                      \
+		constexpr auto HasBit(type bitset, type flag)                                          \
+		{                                                                                      \
+			return static_cast<int>(bitset & flag) != 0;                                       \
+		}
 }
 
 #endif // __QUARK_ENGINE_PLATFORM_RTTI_HPP__

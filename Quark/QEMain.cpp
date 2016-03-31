@@ -20,8 +20,17 @@
 /// [MODULE::HEADER]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <Platform/QEPlatform.hpp>
+#include "System/Window/QEWindowImpl.hpp"
 
 QE::Int32 main()
 {
-    return EXIT_SUCCESS;
+	// Create a test window
+	auto window = new QE::WindowImpl();
+
+	if (window->Create("Quark Engine", 0, 0, 800, 600, QE::WindowAttribute::RESIZEABLE))
+	{
+		return EXIT_SUCCESS;
+	}
+
+    return EXIT_FAILURE;
 }

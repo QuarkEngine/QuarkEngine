@@ -36,6 +36,67 @@ QE::WindowImpl::~WindowImpl()
 {
 	// Destroy the window
 	glfwDestroyWindow(mWindow);
+
+	// Terminate GLFW
+	glfwTerminate();
+}
+
+
+QE::Bool QE::WindowImpl::Create(const String& title, Int32 x, Int32 y, UInt32 width, UInt32 height, WindowAttribute attributes)
+{
+	// Initialise GLFW
+	if (!glfwInit())
+	{
+		return false;
+	}
+
+	// Check if the window should be borderless
+	if (HasBit(attributes, WindowAttribute::BORDERLESS))
+	{
+		glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+	}
+
+	// Check if the window should be resizeable
+	if (HasBit(attributes, WindowAttribute::RESIZEABLE))
+	{
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+	}
+
+	// Check if the window should be hidden
+	if (HasBit(attributes, WindowAttribute::HIDDEN))
+	{
+		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+	}
+
+
+	// Create a fullscreen window if applicable
+	if (HasBit(attributes, WindowAttribute::FULLSCREEN))
+	{
+		// Get the primary monitor and its video mode
+		const auto primaryMonitor = glfwGetPrimaryMonitor();
+		const auto vidMode = glfwGetVideoMode(primaryMonitor);
+
+		// Set the requested refresh rate
+		glfwWindowHint(GLFW_REFRESH_RATE, vidMode->refreshRate);
+
+		// Create the window
+		mWindow = glfwCreateWindow(width, height, title.c_str(), primaryMonitor, nullptr);
+	}
+	else
+	{
+		// Create the window
+		mWindow = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+	}
+
+	// Ensure the window was created successfully
+	if (mWindow == nullptr)
+	{
+		return false;
+	}
+
+	// Set the position of the window
+
+	return true;
 }
 
 

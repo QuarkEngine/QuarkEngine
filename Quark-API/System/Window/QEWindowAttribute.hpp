@@ -34,15 +34,16 @@ namespace QE
     //!
     enum class WindowAttribute : UInt8
     {
-        WINDOWED_BORDERLESS = 0x00,  //!< Specifies if the \see QE::Window doesn't have decoration.
-        WINDOWED_RESIZABLE  = 0x01,  //!< Specifies if the \see QE::Window will be resizable
-        WINDOWED_DECORATED  = 0x02   //!< Specifies if the \see QE::Window will be decorated
+	    BORDERLESS = 0x01,  //! Specifies if the \see QE::Window is borderless
+	    RESIZEABLE = 0x02,  //! Specifies if the \see QE::Window is resizeable
+	    FULLSCREEN = 0x04,  //! Specifies if the \see QE::Window is fullscreened
+	    HIDDEN = 0x08,      //! Specifies if the \see QE::Window is hidden
     };
 
     //!
     //! \brief Allows \see QE::WindowAttribute to be used as flag
     //!
-    TRAIT_ENUM_ALLOW_BIT_OPERATION(WindowAttribute);
+    QE_TRAIT_ENUM_BIT_OPERATIONS(WindowAttribute);
 }
 
 #endif // __QUARK_ENGINE_SYSTEM_WINDOW_ATTRIBUTE_HPP__

@@ -46,6 +46,20 @@ namespace QE
 		~WindowImpl();
 	public:
 		//!
+		//! \brief Creates a new window using GLFW
+		//!
+		//! \param[in] title        -   The title of the window
+		//! \param[in] x            -   The X position of the window (in screen coordinates)
+		//! \param[in] y            -   The Y position of the window (in screen coordinates)
+		//! \param[in] width        -   The width of the window
+		//! \param[in] height       -   The height of the window
+		//! \param[in] attributes   -   The window attributes
+		//!
+		//! \return True if the window was successfully created
+		//!
+		Bool Create(const String& title, Int32 x, Int32 y, UInt32 width, UInt32 height, WindowAttribute attributes);
+
+		//!
 		//! Get the underlying GLFW window handle
 		//!
 		//! \return The GLFW window handle
