@@ -3,7 +3,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0 FATAL_ERROR)
 ####################################################################################################
 ## [C++::PROJECT]
 ####################################################################################################
-PROJECT(Quark_Engine CXX)
+PROJECT(QuarkEngine CXX)
 
 ####################################################################################################
 ## [C++::FLAGS]
@@ -46,10 +46,10 @@ FILE(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/Quark/*.cpp")
 ####################################################################################################
 ## [C++::EXECUTABLE]
 ####################################################################################################
-ADD_EXECUTABLE(Quark_Engine ${SOURCE_FILES})
+ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
 
 ####################################################################################################
 ## [C++::LIBRARIES]
 ####################################################################################################
-TARGET_LINK_LIBRARIES(Quark_Engine PRIVATE ${GLFW_STATIC_LIBRARY})
-TARGET_LINK_LIBRARIES(Quark_Engine PRIVATE ${GLFW_LIBRARIES})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} PRIVATE ${GLFW_STATIC_LIBRARY})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} PRIVATE ${GLFW_LIBRARIES})

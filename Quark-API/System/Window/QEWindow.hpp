@@ -15,16 +15,16 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#ifndef __QUARK_ENGINE_MEDIA_WINDOW_HPP__
-#define __QUARK_ENGINE_MEDIA_WINDOW_HPP__
+#ifndef __QUARK_ENGINE_SYSTEM_WINDOW_HPP__
+#define __QUARK_ENGINE_SYSTEM_WINDOW_HPP__
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// [MODULE::HEADER]
+/// [HEADER]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "QEWindowAttribute.hpp"
+#include "System/Window/QEWindowAttribute.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// [MODULE::DEFINITION]
+/// [DEFINITION]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace QE
 {
@@ -82,21 +82,6 @@ namespace QE
         //! \return True if the window is in fullscreen mode, false otherwise
         //!
         virtual Bool IsFullscreen() const = 0;
-
-        //!
-        //! \brief Check whenever the window is open
-        //!
-        //! \return True if the window is open, false otherwise
-        //!
-        virtual Bool IsOpen() const = 0;
-
-        //!
-        //! \brief Check whenever the window is closed
-        //!
-        //! \return True if the window is closed, false otherwise
-        //!
-        virtual Bool IsClosed() const = 0;
-
     public:
         //!
         //! \brief Changes the size of the window
@@ -116,7 +101,7 @@ namespace QE
         //!
         //! \brief Change the visibility of the window (Only applicable for windowed mode)
         //!
-        //! \param[in] visibility   -   True to show the window, false otherwise
+        //! \param[in] visible   -   True to show the window, false otherwise
         //!
         virtual Void SetVisibility(Bool visibility) = 0;
 
@@ -125,9 +110,8 @@ namespace QE
         //!
         //! \param[in] width    -   The new width (in screen coordinates)
         //! \param[in] height   -   The new height (in screen coordinates)
-        //! \param[in] mode     -   The decoration mode of the window
         //!
-        virtual Void SwitchToWindowed(UInt16 width, UInt16 height, WindowAttribute mode) = 0;
+        virtual Void SwitchToWindowed(UInt16 width, UInt16 height) = 0;
 
         //!
         //! \brief Change the current mode of the window to fullscreen mode
@@ -144,4 +128,4 @@ namespace QE
     };
 }
 
-#endif // __QUARK_ENGINE_MEDIA_WINDOW_HPP__
+#endif // __QUARK_ENGINE_SYSTEM_WINDOW_HPP__
