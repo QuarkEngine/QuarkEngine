@@ -46,88 +46,69 @@ namespace QE
 		~WindowImpl();
 	public:
 		//!
-		//! \brief Get the dimension of the window (in screen coordinates)
+		//! Get the underlying GLFW window handle
 		//!
-		//! \param[in] width    -   The value to store the width in
-		//! \param[in] height   -   The value to store the height in
+		//! \return The GLFW window handle
+		//!
+		GLFWwindow* GetHandle() const;
+	public:
+		//!
+		//! \inheritDoc
 		//!
 		Void GetDimension(UInt32& width, UInt32& height) const override;
 
 		//!
-		//! \brief Check whenever the window is visible
-		//!
-		//! \return True if the window is visible, false otherwise
+		//! \inheritDoc
 		//!
 		Bool IsVisible() const override;
 
 		//!
-		//! \brief Check whenever the window is resizable (windowed mode)
-		//!
-		//! \return True if the window is resizable, false otherwise
+		//! \inheritDoc
 		//!
 		Bool IsResizable() const override;
 
 		//!
-		//! \brief Check whenever the window is decorated (windowed mode)
-		//!
-		//! \return True if the window is decorated, false otherwise
+		//! \inheritDoc
 		//!
 		Bool IsDecorated() const override;
 
 		//!
-		//! \brief Check whenever the window is in windowed mode
-		//!
-		//! \return True if the window is in windowed mode, false otherwise
+		//! \inheritDoc
 		//!
 		Bool IsWindowed() const override;
 
 		//!
-		//! \brief Check whenever the window is in fullscreen mode
-		//!
-		//! \return True if the window is in fullscreen mode, false otherwise
+		//! \inheritDoc
 		//!
 		Bool IsFullscreen() const override;
 	public:
 		//!
-		//! \brief Changes the size of the window
-		//!
-		//! \param[in] width    -   The new width (in screen coordinates)
-		//! \param[in] height   -   The new height (in screen coordinates)
+		//! \inheritDoc
 		//!
 		Void SetDimension(UInt16 width, UInt16 height) override;
 
 		//!
-		//! \brief Changes the title of the window
-		//!
-		//! \param[in] title    -   The new title of the window
+		//! \inheritDoc
 		//!
 		Void SetTitle(const String& title) override;
 
 		//!
-		//! \brief Change the visibility of the window (Only applicable for windowed mode)
-		//!
-		//! \param[in] visible   -   True to show the window, false otherwise
+		//! \inheritDoc
 		//!
 		Void SetVisibility(Bool visibility) override;
 
 		//!
-		//! \brief Change the current mode of the window to windowed mode
-		//!
-		//! \param[in] width    -   The new width (in screen coordinates)
-		//! \param[in] height   -   The new height (in screen coordinates)
+		//! \inheritDoc
 		//!
 		Void SwitchToWindowed(UInt16 width, UInt16 height) override;
 
 		//!
-		//! \brief Change the current mode of the window to fullscreen mode
+		//! \inheritDoc
 		//!
 		Void SwitchToFullscreen() override;
 
 		//!
-		//! \brief Change the current mode of the window to fullscreen mode
-		//!
-		//! \param[in] width    -   The new width (in screen coordinates)
-		//! \param[in] height   -   The new height (in screen coordinates)
+		//! \inheritDoc
 		//!
 		Void SwitchToFullscreen(UInt16 width, UInt16 height) override;
 	private:
