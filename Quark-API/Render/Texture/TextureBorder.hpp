@@ -15,22 +15,52 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma once
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// [MODULE::HEADER]
+/// [HEADER]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include <Platform/QEPlatform.hpp>
-#include "System/Window/QEWindowImpl.hpp"
+#include "QuarkAPI.hpp"
 
-QE::Int32 main()
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// [DEFINITION]
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace QE
 {
-	// Create a test window
-	auto window = new QE::WindowImpl();
-
-	if (window->Create("Quark Engine", 0, 0, 800, 600, QE::WindowAttribute::RESIZEABLE))
+	//!
+	//! \brief Encapuslates the texture border address modes
+	//!
+	class TextureBorder
 	{
-		return EXIT_SUCCESS;
-	}
-
-    return EXIT_FAILURE;
+	public:
+		//!
+		//! \brief Constructs a TextureBorder
+		//!
+		//! \param[in] mode	-	The border mode
+		//!
+		constexpr TextureBorder(UInt32 mode) :
+			mMode(mode)
+		{
+		}
+	public:
+		//!
+		//! \brief Operator-Overload which allows TextureBorder to be implicitly casted to an integral type
+		//!
+		//! \return The casted integral type
+		//!
+		template<typename T, typename = typename std::enable_if_t<std::is_integral<T>::value>>
+		constexpr operator T() const
+		{
+			return static_cast<T>(mMode);
+		}
+	public:
+		static TextureBorder REPEAT;
+		static TextureBorder MIRRORED;
+		static TextureBorder MIRRORED_REPEAT;
+		static TextureBorder CLAMP_TO_BORDER;
+		static TextureBorder CLAMP_TO_EDGE;
+	private:
+		const UInt32 mMode;
+	};
 }

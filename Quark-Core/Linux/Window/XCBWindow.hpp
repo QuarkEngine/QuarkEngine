@@ -15,14 +15,13 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#ifndef __QUARK_ENGINE_SYSTEM_WINDOWIMPL_HPP__
-#define __QUARK_ENGINE_SYSTEM_WINDOWIMPL_HPP__
+#pragma once
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// [HEADER]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "System/Window/QEWindow.hpp"
-#include <GLFW/glfw3.h>
+#include "System/Window/Window.hpp"
+#include <xcb/xcb.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// [DEFINITION]
@@ -30,23 +29,23 @@
 namespace QE
 {
 	//!
-	//! \brief Encapsulate the base definition of a window
+	//! \brief The XCB window implementation
 	//!
-	class WindowImpl : public Window
+	class XCBWindow final : public Window
 	{
 	public:
 		//!
-		//! \brief Constructs an instance of WindowImpl
+		//! \brief Constructs an instance of XCBWindow
 		//!
-		WindowImpl();
+		XCBWindow();
 
 		//!
-		//! \brief Destructs the instance of WindowImpl
+		//! \brief Destructs the instance of XCBWindow
 		//!
-		~WindowImpl();
+		~XCBWindow();
 	public:
 		//!
-		//! \brief Creates a new window using GLFW
+		//! \brief Creates a new window
 		//!
 		//! \param[in] title        -   The title of the window
 		//! \param[in] x            -   The X position of the window (in screen coordinates)
@@ -55,16 +54,9 @@ namespace QE
 		//! \param[in] height       -   The height of the window
 		//! \param[in] attributes   -   The window attributes
 		//!
-		//! \return True if the window was successfully created
+		//! \return True if the window was successfully created, false otherwise
 		//!
-		Bool Create(const String& title, Int32 x, Int32 y, UInt32 width, UInt32 height, WindowAttribute attributes);
-
-		//!
-		//! Get the underlying GLFW window handle
-		//!
-		//! \return The GLFW window handle
-		//!
-		GLFWwindow* GetHandle() const;
+		Bool Create(const String& title, Int32 x, Int32 y, UInt32 width, UInt32 height, WindowAttribute attributes, Void* userdata);
 	public:
 		//!
 		//! \inheritDoc
@@ -74,7 +66,12 @@ namespace QE
 		//!
 		//! \inheritDoc
 		//!
-		Bool IsVisible() const override;
+		Void SetDimension(UInt32 width, UInt32 height) override;
+
+		//!
+		//! \inheritDoc
+		//!
+		Void SetTitle(const String& title) override;
 
 		//!
 		//! \inheritDoc
@@ -84,7 +81,7 @@ namespace QE
 		//!
 		//! \inheritDoc
 		//!
-		Bool IsDecorated() const override;
+		Bool IsBorderless() const override;
 
 		//!
 		//! \inheritDoc
@@ -95,39 +92,36 @@ namespace QE
 		//! \inheritDoc
 		//!
 		Bool IsFullscreen() const override;
-	public:
-		//!
-		//! \inheritDoc
-		//!
-		Void SetDimension(UInt16 width, UInt16 height) override;
 
 		//!
 		//! \inheritDoc
 		//!
-		Void SetTitle(const String& title) override;
-
-		//!
-		//! \inheritDoc
-		//!
-		Void SetVisibility(Bool visibility) override;
-
-		//!
-		//! \inheritDoc
-		//!
-		Void SwitchToWindowed(UInt16 width, UInt16 height) override;
+		Void SwitchToWindowed() override;
 
 		//!
 		//! \inheritDoc
 		//!
 		Void SwitchToFullscreen() override;
-
-		//!
-		//! \inheritDoc
-		//!
-		Void SwitchToFullscreen(UInt16 width, UInt16 height) override;
 	private:
-		GLFWwindow* mWindow;
+		//!
+		//! \brief Helper method to retrieve an atom from XCB
+		//!
+		//! \param[in] name -   The name of the atom
+		//!
+		//! \return The atom
+		//!
+		xcb_atom_t GetAtom(const String& name) const;
+	private:
+		xcb_connection_t* mConnection;
+		xcb_screen_t* mScreen;
+		xcb_window_t mWindow;
+		xcb_atom_t ATOM_WM_PROTOCOLS;
+		xcb_atom_t ATOM_WM_DELETE_WINDOW;
+		xcb_atom_t ATOM_WM_STATE;
+		xcb_atom_t ATOM_WM_STATE_FULLSCREEN;
+		xcb_atom_t ATOM_WM_STATE_MAXIMISED_HORZ;
+		xcb_atom_t ATOM_WM_STATE_MAXIMISED_VERT;
+		WindowAttribute mAttributes;
+		Bool mIsFullscreen;
 	};
 }
-
-#endif // __QUARK_ENGINE_SYSTEM_WINDOWIMPL_HPP__
